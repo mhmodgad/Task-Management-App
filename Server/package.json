@@ -1,0 +1,30 @@
+{
+  "name": "task",
+  "version": "1.0.0",
+  "description": "Simple task management app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mega404/Task-Management-App.git"
+  },
+  "author": "mega01",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mega404/Task-Management-App/issues"
+  },
+  "homepage": "https://github.com/mega404/Task-Management-App#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.0",
+    "nodemon": "^2.0.22",
+    "validator": "^13.9.0"
+  }
+}
