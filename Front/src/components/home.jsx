@@ -1,9 +1,12 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import Footer from "./footer";
+import Navigation from "./navbar";
+
 const Home = () => {
   return (
     <div>
+      <Navigation/>
       <Container className="my-5">
         <Row>
           <Col>

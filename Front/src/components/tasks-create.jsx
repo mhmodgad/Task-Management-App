@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import getToken from "../token/getToken";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateTask = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -14,9 +18,33 @@ const CreateTask = () => {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: add create task logic
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/task",
+        {
+          title,
+          description,
+          dueDate,
+          priority,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Task Created Successfully");
+        navigate("/tasks", { replace: true });
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.log(error);
+      alert(`Error: ${error.response.status}`);
+    }
   };
 
   return (

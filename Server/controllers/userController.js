@@ -46,7 +46,7 @@ const login = async (req, res, nxt) => {
       }
       if (result) {
         const token = JWT.sign(
-          { id: user.id, isAdmin: user.isAdmin },
+          { id: user.id},
           config.get("jwt")
         );
         return res.status(200).send(token);

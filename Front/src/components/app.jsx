@@ -15,7 +15,7 @@ class app extends Component {
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/tasks" exact element={<TaskList />} />
-          <Route path="/create" exact element={<CreateTask />} />
+          <Route path="/newtask" exact element={<CreateTask />} />
           <Route path="/not" element={<NotFound />} />
           <Route path="/home" element={<Navigate to="/" replace />} />
           <Route path="*" element={<Navigate to="/not" replace />} />
