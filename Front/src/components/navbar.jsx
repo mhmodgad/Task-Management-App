@@ -17,6 +17,9 @@ const Navigation = () => {
           <Nav.Link as={Link} to="/tasks">
             Tasks
           </Nav.Link>
+          <Nav.Link as={Link} to="/teams">
+            Teams
+          </Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link as={Link} to="/register">

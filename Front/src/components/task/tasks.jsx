@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Table, Button, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import getToken from "../token/getToken";
+import getToken from "../../token/getToken";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import Task from "../models/task";
+import Task from "../../models/task";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -22,7 +22,15 @@ const TaskList = () => {
       })
       .then((response) => {
         const tasksFromApi = response.data.map(
-          (task) => new Task(task._id, task.title, task.description, task.status, task.duedate, task.priority)
+          (task) =>
+            new Task(
+              task._id,
+              task.title,
+              task.description,
+              task.status,
+              task.duedate,
+              task.priority
+            )
         );
         setTasks(tasksFromApi);
       })
@@ -62,9 +70,7 @@ const TaskList = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleSort("")}>
-                All
-              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleSort("")}>All</Dropdown.Item>
               <Dropdown.Item onClick={() => handleSort("priority")}>
                 Priority
               </Dropdown.Item>
@@ -92,10 +98,7 @@ const TaskList = () => {
                   <td>{task.status}</td>
                   <td>
                     <Link to={`/task/${task._id}`}>
-                      <FaEdit
-                        className="mr-2"
-                        style={{ cursor: "pointer" }}
-                      />
+                      <FaEdit className="mr-2" style={{ cursor: "pointer" }} />
                     </Link>
                     <FaTrash
                       style={{ cursor: "pointer" }}
@@ -108,7 +111,7 @@ const TaskList = () => {
           </Table>
         </Col>
       </Row>
-      <Link to="/newtask">
+      <Link to="/task">
         <Button variant="primary" className="floating-btn">
           Add Task
         </Button>

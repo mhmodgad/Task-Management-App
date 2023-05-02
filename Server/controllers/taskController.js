@@ -35,7 +35,7 @@ const getAllTasks = async (req, res) => {
     } else {
       tasks = tasksByNearestDeadline(tasks);
     }
-  
+
     // console.log(tasks);
     return res.status(200).send(tasks);
   } catch (err) {
@@ -65,8 +65,14 @@ const createTask = async (req, res) => {
   }
 };
 
-const getTaskById = (req, res) => {
-  // Logic for getting a single task by ID
+const getTaskById = async (req, res) => {
+  console.log(req.params.id);
+  const task = await Task.findById(req.params.id).exec();
+  if (!task) {
+    return res.status(404);
+  }
+  console.log(task);
+  return res.status(200).send(task);
 };
 
 const updateTask = (req, res) => {
@@ -87,6 +93,7 @@ const deleteTask = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
 module.exports = {
   getAllTasks,
   createTask,

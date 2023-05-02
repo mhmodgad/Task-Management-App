@@ -1,7 +1,5 @@
 const User = require("../models/user");
-const JWT = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const config = require("config")
+
 
 const getAllUsers = (req, res) => {
   // Logic for getting all tasks
