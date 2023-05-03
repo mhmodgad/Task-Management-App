@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import "./css/Register.css";
 import axios from "axios";
 import { useEffect } from "react";
 import getToken from "../token/getToken";

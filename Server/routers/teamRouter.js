@@ -8,10 +8,11 @@ const {
   removeTask,
   deleteTeam,
 } = require("../controllers/teamController");
-
+const userId = require("../middlewares/userId");
 const auth = require("../middlewares/auth");
 const express = require("express");
 const router = express.Router();
+router.use(userId);
 
 router.post("/", createTeam);
 router.delete("/:id", auth, deleteTeam);

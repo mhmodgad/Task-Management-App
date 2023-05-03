@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const getAllUsers = (req, res) => {
   // Logic for getting all tasks
@@ -19,7 +22,8 @@ const register = async (req, res, nxt) => {
       name: req.body.name,
     });
     await user.save();
-    const token = JWT.sign({ id: user.id }, config.get("jwt"));
+    const token = jwt.sign({ id: user.id }, config.get("jwt"));
+    console.log(token);
     return res.status(200).send(token);
   } catch (err) {
     nxt(err);
@@ -34,12 +38,14 @@ const login = async (req, res, nxt) => {
     if (!user) {
       return res.status(409).send("User Doesn't Exist");
     }
+
     bcrypt.compare(req.body.password, user.password, function (err, result) {
       if (err) {
         console.log("Error comparing passwords");
       }
+      console.log(result);
       if (result) {
-        const token = JWT.sign({ id: user.id }, config.get("jwt"));
+        const token = jwt.sign({ id: user.id }, config.get("jwt"));
         return res.status(200).send(token);
       } else {
         return res.status(403).send("Wrong passwords");

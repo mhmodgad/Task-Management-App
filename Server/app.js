@@ -27,8 +27,6 @@ mongoose
 // Middlewares
 app.use(reqLogger);
 
-app.use(userId);
-
 app.use("/task", taskRoutes);
 
 app.use("/user", userRoutes);

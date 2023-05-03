@@ -8,7 +8,8 @@ const {
   updateTask,
   deleteTask,
 } = require("../controllers/taskController");
-
+const userId = require("../middlewares/userId");
+router.use(userId);
 
 router.get("/", getAllTasks);
 router.post("/", createTask);
