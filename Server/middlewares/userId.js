@@ -4,6 +4,7 @@ const config = require("config");
 
 const getUserId = async (req, res, next) => {
   try {
+    console.log(req.header);
     const token = req.header("Authorization").replace("Bearer ", "");
     const decodedToken = jwt.verify(token, config.get("jwt"));
     const userId = decodedToken.id;
@@ -15,11 +16,11 @@ const getUserId = async (req, res, next) => {
     }
     req.user = user;
     req.token = token;
-    console.log("User authenticated");
+    console.log("User Has valid token");
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).send({ error: "Please authenticate." });
+    res.status(401).send({ error: "Please Login first." });
   }
 };
 

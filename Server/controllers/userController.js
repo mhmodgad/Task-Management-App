@@ -1,6 +1,5 @@
 const User = require("../models/user");
 
-
 const getAllUsers = (req, res) => {
   // Logic for getting all tasks
 };
@@ -20,10 +19,7 @@ const register = async (req, res, nxt) => {
       name: req.body.name,
     });
     await user.save();
-    const token = JWT.sign(
-      { id: user.id},
-      config.get("jwt")
-    );
+    const token = JWT.sign({ id: user.id }, config.get("jwt"));
     return res.status(200).send(token);
   } catch (err) {
     nxt(err);
@@ -43,10 +39,7 @@ const login = async (req, res, nxt) => {
         console.log("Error comparing passwords");
       }
       if (result) {
-        const token = JWT.sign(
-          { id: user.id},
-          config.get("jwt")
-        );
+        const token = JWT.sign({ id: user.id }, config.get("jwt"));
         return res.status(200).send(token);
       } else {
         return res.status(403).send("Wrong passwords");
@@ -66,4 +59,24 @@ const deleteUser = (req, res) => {
   // Logic for deleting a task
 };
 
-module.exports = { getAllUsers, register, login, updateUser, deleteUser };
+const searchByUsername = async (req, res) => {
+  try {
+    console.log(req.query.q);
+    const searchQuery = req.query.q;
+    const users = await User.find({ name: { $regex: `^${searchQuery}` } });
+    const names = users.map((user) => user.name);
+    return res.status(200).send(names);
+  } catch (err) {
+    console.log(err);
+    return res.status(500);
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  register,
+  login,
+  updateUser,
+  deleteUser,
+  searchByUsername,
+};

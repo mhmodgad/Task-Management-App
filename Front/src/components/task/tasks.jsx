@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col, Table, Button, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+  Dropdown,
+  Modal,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import getToken from "../../token/getToken";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -9,7 +17,8 @@ import Task from "../../models/task";
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [sortBy, setSortBy] = useState("");
-
+  const [showRemoveTaskModal, setShowRemoveTaskModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:3001/task", {
@@ -39,7 +48,8 @@ const TaskList = () => {
       });
   }, [sortBy]);
 
-  const handleDelete = (taskId) => {
+  const handleDelete = () => {
+    const taskId = selectedTask._id;
     axios
       .delete(`http://localhost:3001/task/${taskId}`, {
         headers: {
@@ -48,6 +58,9 @@ const TaskList = () => {
       })
       .then((response) => {
         console.log(response.data);
+        setTasks(response.data);
+        setShowRemoveTaskModal(false);
+        setSelectedTask("");
         setTasks(tasks.filter((task) => task._id !== taskId));
       })
       .catch((error) => {
@@ -102,7 +115,10 @@ const TaskList = () => {
                     </Link>
                     <FaTrash
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(task._id)}
+                      onClick={() => {
+                        setShowRemoveTaskModal(true);
+                        setSelectedTask(task);
+                      }}
                     />
                   </td>
                 </tr>
@@ -116,6 +132,30 @@ const TaskList = () => {
           Add Task
         </Button>
       </Link>
+      <Modal
+        show={showRemoveTaskModal}
+        onHide={() => setShowRemoveTaskModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Remove Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to remove the task "{selectedTask?.name}"?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowRemoveTaskModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Remove
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

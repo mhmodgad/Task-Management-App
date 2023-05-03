@@ -21,6 +21,7 @@ class app extends Component {
           <Route path="/register" exact element={<Register />} />
           <Route path="/tasks" exact element={<TaskList />} />
           <Route path="/task/:id" exact element={<CreateTask />} />
+          <Route path="/task" exact element={<CreateTask />} />
           <Route path="/teams" exact element={<TeamsList />} />
           <Route path="/newTeam" exact element={<CreateTeam />} />
           <Route path="/team/:id" exact element={<TeamManagement />} />

@@ -81,6 +81,7 @@ const updateTask = (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
+    console.log(req.user);
     console.log("delete task");
     const deletedTask = await Task.findByIdAndDelete(req.params.id);
 
@@ -88,8 +89,9 @@ const deleteTask = async (req, res) => {
       return res.status(404).send();
     }
 
-    res.send(deletedTask);
+    res.send("sed");
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };
